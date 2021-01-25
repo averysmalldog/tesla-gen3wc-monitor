@@ -2,7 +2,7 @@
 
 A simple all-in-one stack for tracking detailed metrics from a [Tesla Gen 3 Wall Connector](https://shop.tesla.com/product/wall-connector) (a.k.a. HPWC) and visualizing the data. The real magic is `polly`, a Go-based API polling tool that converts JSON output from GETs to the HPWC to InfluxDB POSTs. We then visualize the data with Grafana.
 
-![pic](pictures/Gen3 Demo.png)
+![pic](pictures/download.jpeg)
 
 A *particularly fascinating* detail I've learned about the Gen 3 HPWC is that it can deal with at least 10 samples per second, and it measures grid voltage and frequency with incredible accuracy: 4 significant digits for voltage, and 5 significant digits for grid frequency. It's like having a weathervane for your local electrical grid as a combo bonus with charging your car.
 
