@@ -1,4 +1,46 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_INFLUXDB",
+      "label": "InfluxDB",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "gauge",
+      "name": "Gauge",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "7.3.7"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -15,7 +57,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 2,
-  "id": 1,
+  "id": null,
   "links": [],
   "panels": [
     {
@@ -23,7 +65,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -103,7 +145,17 @@
           "tags": []
         }
       ],
-      "thresholds": [],
+      "thresholds": [
+        {
+          "$$hashKey": "object:112",
+          "colorMode": "ok",
+          "fill": false,
+          "line": true,
+          "op": "gt",
+          "value": 60,
+          "yaxis": "left"
+        }
+      ],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
@@ -147,7 +199,7 @@
       }
     },
     {
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -238,7 +290,7 @@
       "type": "gauge"
     },
     {
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -337,7 +389,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -354,7 +406,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "volt"
         },
         "overrides": []
       },
@@ -552,7 +605,7 @@
       },
       "yaxes": [
         {
-          "format": "short",
+          "format": "volt",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -578,7 +631,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -706,7 +759,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -931,7 +984,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -1062,7 +1115,7 @@
     "list": []
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {
@@ -1077,5 +1130,5 @@
   "timezone": "",
   "title": "Basic HPWC Info",
   "uid": "GqOd0wfGk",
-  "version": 10
+  "version": 12
 }
