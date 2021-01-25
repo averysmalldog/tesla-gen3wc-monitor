@@ -1,4 +1,4 @@
-# tesla-hpwc-monitor
+# tesla-gen3wc-monitor
 
 A simple all-in-one stack for tracking detailed metrics from a [Tesla Gen 3 Wall Connector](https://shop.tesla.com/product/wall-connector) (a.k.a. HPWC) and visualizing the data. The real magic is `polly`, a Go-based API polling tool that converts JSON output from GETs to the HPWC to InfluxDB POSTs. We then visualize the data with Grafana.
 
