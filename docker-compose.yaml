@@ -34,8 +34,8 @@ services:
     networks:
       - monitoring
     environment: 
-      - HPWC_IP=192.168.86.23
-      - INFLUX_IP=host.docker.internal
+      - HPWC_IP
+      - INFLUX_IP
 networks:
   monitoring:
 volumes:
