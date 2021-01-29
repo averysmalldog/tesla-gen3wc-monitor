@@ -1,4 +1,4 @@
-version: "2"
+version: "3.7"
 services:
   grafana:
     image: grafana/grafana
@@ -26,7 +26,16 @@ services:
       - INFLUXDB_ADMIN_ENABLED=true
 
       - INFLUXDB_ADMIN_USER=admin
-      - INFLUXDB_ADMIN_PASSWORD=admin 
+      - INFLUXDB_ADMIN_PASSWORD=admin
+  polly:
+    image: averysmalldog/tesla-gen3wc-monitor
+    container_name: polly
+    restart: always
+    networks:
+      - monitoring
+    environment: 
+      - HPWC_IP=192.168.86.23
+      - INFLUX_IP=host.docker.internal
 networks:
   monitoring:
 volumes:
