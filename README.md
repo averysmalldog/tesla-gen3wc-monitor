@@ -35,6 +35,15 @@ Right now, the setup process is manual and requires changing hard-coded values. 
 
 *Note: You can accurately represent your local electrical cost by changing line 321 of the dashboard JSON from 0.24 (my cost per kWh) to whatever it is for you.*
 
+## Running the Gen 3 Wall Connector monitor without Docker
+
+If you already have InfluxDB running in your environment and just just want to run the Gen 3 Wall Connector monitor in your terminal, it's pretty easy:
+
+1. Set both `HPWC_IP` and `INFLUX_IP` as environment variables: `export HPWC_IP="<your IP Address>" && export INFLUX_IP="<your IP Address>"`. For example, `export HPWC_IP="192.168.1.5" && export INFLUX_IP="192.168.1.6"`
+2. Compile and run the main executable in one simple command: `go run main.go`
+
+This process depends on InfluxDB being reachable over http (*not https!!*) on port 8086 and having a database called `tesla`.
+
 ## Wish List
 
 - Gen 3 WC finder: scans through the active subnet of the host (assuming a home network) and locates the HPWC(s), supplying the IP(s) as target(s) for `polly` to poll.
