@@ -27,7 +27,7 @@ services:
       - DOCKER_INFLUXDB_INIT_BUCKET=hpwc
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=my-secret-token
   polly:
-    image: averysmalldog/tesla-gen3wc-monitor
+    image: averysmalldog/tesla-gen3wc-monitor:beta
     container_name: polly
     restart: always
     networks:
