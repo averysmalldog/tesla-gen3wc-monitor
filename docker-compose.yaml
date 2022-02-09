@@ -17,7 +17,7 @@ services:
     networks:
       - monitoring
     volumes:
-      - $PWD/influxdb2:/var/lib/influxdb2:rw
+      - influxdb-volume:/vol01/Docker/monitoring
     # Use the influx cli to set up an influxdb instance. 
   influxdb_cli:
     links:
@@ -25,7 +25,7 @@ services:
     image: influxdb:latest
     volumes:
       # Mount for influxdb data directory and configuration
-      - $PWD/influxdb2:/var/lib/influxdb2:rw
+      - influxdb-volume:/vol01/Docker/monitoring
     environment: 
        # Use these same configurations parameters in your telegraf configuration, mytelegraf.conf.
       #- DOCKER_INFLUXDB_INIT_MODE=setup
@@ -53,4 +53,6 @@ networks:
   monitoring:
 volumes:
   grafana-volume:
+    external: true
+  influxdb-volume:
     external: true
