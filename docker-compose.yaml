@@ -28,7 +28,7 @@ services:
       - influxdb-volume:/vol01/Docker/monitoring
     environment: 
        # Use these same configurations parameters in your telegraf configuration, mytelegraf.conf.
-      #- DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_MODE=setup
       - DOCKER_INFLUXDB_INIT_USERNAME=admin
       - DOCKER_INFLUXDB_INIT_PASSWORD=tesla
       - DOCKER_INFLUXDB_INIT_ORG=myorg
