@@ -11,22 +11,33 @@ services:
     volumes:
       - grafana-volume:/vol01/Docker/monitoring
   influxdb:
-    image: influxdb
-    container_name: influxdb
-    restart: always
+    image: influxdb:latest
     ports:
       - 8086:8086
     networks:
       - monitoring
     volumes:
-      - influxdb-volume:/vol01/Docker/monitoring
-    environment:
-      - INFLUXDB_DB=tesla
-      - INFLUXDB_USER=tesla
-      - INFLUXDB_ADMIN_ENABLED=true
-
-      - INFLUXDB_ADMIN_USER=admin
-      - INFLUXDB_ADMIN_PASSWORD=admin
+      - $PWD/influxdb2:/var/lib/influxdb2:rw
+    # Use the influx cli to set up an influxdb instance. 
+  influxdb_cli:
+    links:
+      - influxdb
+    image: influxdb:latest
+    volumes:
+      # Mount for influxdb data directory and configuration
+      - $PWD/influxdb2:/var/lib/influxdb2:rw
+    environment: 
+       # Use these same configurations parameters in your telegraf configuration, mytelegraf.conf.
+      #- DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=tesla
+      - DOCKER_INFLUXDB_INIT_ORG=myorg
+      - DOCKER_INFLUXDB_INIT_BUCKET=hpwc
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=mytoken
+    entrypoint: ["./entrypoint.sh"]
+    restart: on-failure:10
+    depends_on:
+      - influxdb
   polly:
     image: averysmalldog/tesla-gen3wc-monitor
     container_name: polly
@@ -36,10 +47,10 @@ services:
     environment: 
       - HPWC_IP
       - INFLUX_IP=host.docker.internal
+    depends_on:
+      - influxdb_cli
 networks:
   monitoring:
 volumes:
   grafana-volume:
-    external: true
-  influxdb-volume:
     external: true
