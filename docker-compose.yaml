@@ -23,11 +23,11 @@ services:
       - DOCKER_INFLUXDB_INIT_MODE=setup
       - DOCKER_INFLUXDB_INIT_USERNAME=admin
       - DOCKER_INFLUXDB_INIT_PASSWORD=admin123
-      - DOCKER_INFLUXDB_INIT_ORG=myorg
-      - DOCKER_INFLUXDB_INIT_BUCKET=hpwc
+      - DOCKER_INFLUXDB_INIT_ORG=admin #should be myorg, but tweaking for a test
+      - DOCKER_INFLUXDB_INIT_BUCKET=admin123 #should be hpwc, but tweaking for a test
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=my-token
   polly:
-    image: averysmalldog/tesla-gen3wc-monitor:beta1
+    image: averysmalldog/tesla-gen3wc-monitor
     container_name: polly
     restart: always
     networks:
