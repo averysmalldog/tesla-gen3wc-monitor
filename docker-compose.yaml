@@ -17,7 +17,7 @@ services:
     networks:
       - monitoring
     volumes:
-      - influxdb-volume:/vol01/Docker/monitoring
+      - influxdb-volume:/var/lib/influxdb
     environment: 
        # Use these same configurations parameters in your telegraf configuration, mytelegraf.conf.
       #- DOCKER_INFLUXDB_INIT_MODE=setup
