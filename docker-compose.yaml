@@ -25,7 +25,7 @@ services:
       - DOCKER_INFLUXDB_INIT_PASSWORD=admin123
       - DOCKER_INFLUXDB_INIT_ORG=myorg
       - DOCKER_INFLUXDB_INIT_BUCKET=hpwc
-      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=my-secret-token
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=my-token
   polly:
     image: averysmalldog/tesla-gen3wc-monitor:beta
     container_name: polly
