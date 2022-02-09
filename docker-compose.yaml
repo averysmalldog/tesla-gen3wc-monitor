@@ -18,26 +18,14 @@ services:
       - monitoring
     volumes:
       - influxdb-volume:/vol01/Docker/monitoring
-    # Use the influx cli to set up an influxdb instance. 
-  influxdb_cli:
-    links:
-      - influxdb
-    image: influxdb:latest
-    volumes:
-      # Mount for influxdb data directory and configuration
-      - influxdb-volume:/vol01/Docker/monitoring
     environment: 
        # Use these same configurations parameters in your telegraf configuration, mytelegraf.conf.
-      - DOCKER_INFLUXDB_INIT_MODE=setup
+      #- DOCKER_INFLUXDB_INIT_MODE=setup
       - DOCKER_INFLUXDB_INIT_USERNAME=admin
       - DOCKER_INFLUXDB_INIT_PASSWORD=tesla
       - DOCKER_INFLUXDB_INIT_ORG=myorg
       - DOCKER_INFLUXDB_INIT_BUCKET=hpwc
-      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=mytoken
-    entrypoint: ["./entrypoint.sh"]
-    restart: on-failure:10
-    depends_on:
-      - influxdb
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=my-secret-token
   polly:
     image: averysmalldog/tesla-gen3wc-monitor
     container_name: polly
@@ -48,7 +36,7 @@ services:
       - HPWC_IP
       - INFLUX_IP=host.docker.internal
     depends_on:
-      - influxdb_cli
+      - influxdb
 networks:
   monitoring:
 volumes:
