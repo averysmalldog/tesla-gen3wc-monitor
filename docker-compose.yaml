@@ -12,6 +12,7 @@ services:
       - grafana-volume:/vol01/Docker/monitoring
   influxdb:
     image: influxdb:latest
+    container_name: influxdb
     ports:
       - 8086:8086
     networks:
