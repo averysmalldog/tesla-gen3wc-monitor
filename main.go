@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/averysmalldog/polly"
+	"github.com/kloodz-mrioux/polly"
 )
 
 func main() {
