@@ -5,7 +5,7 @@ import (
     "fmt"
     "net"
     "net/http"
-    // "strings"
+    "strings"
 )
 
 type Vital struct {
@@ -15,12 +15,10 @@ type Vital struct {
 
 func main() {
     // Get the subnet information
-	fmt.Println("getting subnet")
     subnet := getSubnet()
 
     // Scan all the routable IPs within the subnet to identify active IPs
-    fmt.Println("scanning subnet")
-	activeIPs := scanSubnet(subnet)
+    activeIPs := scanSubnet(subnet)
 
     // Test each active IP with a simple HTTP GET at the following endpoint: /api/1/vitals
     var respondingIPs []string
@@ -69,26 +67,29 @@ func main() {
 
 func getSubnet() *net.IPNet {
     // Get the default gateway
-    gateway, err := net.DefaultGateway()
+    interfaces, err := net.Interfaces()
     if err != nil {
         fmt.Println(err)
         return nil
     }
 
-    // Get the subnet mask
-    subnetMask, err := net.ParseCIDRMask(gateway.IP.String() + "/24")
-    if err != nil {
-        fmt.Println(err)
-        return nil
+    for _, i := range interfaces {
+        addrs, err := i.Addrs()
+        if err != nil {
+            fmt.Println(err)
+            continue
+        }
+
+        for _, addr := range addrs {
+            // Check if the address is a gateway
+            if ipnet, ok := addr.(*net.IPNet); ok && ipnet.IP.IsGlobalUnicast() && ipnet.IP.To4() != nil {
+                // Return the subnet information
+                return ipnet
+            }
+        }
     }
 
-    // Create a subnet IPNet
-    subnet := &net.IPNet{
-        IP:   gateway.IP,
-        Mask: subnetMask,
-    }
-
-    return subnet
+    return nil
 }
 
 func scanSubnet(subnet *net.IPNet) []string {
@@ -98,7 +99,7 @@ func scanSubnet(subnet *net.IPNet) []string {
     // Iterate over all the routable IPs in the subnet
     for i := subnet.IP.Mask(subnet.Mask).To4(); i.Cmp(subnet.IP.Mask(subnet.Mask).To4().Add(subnet.Mask.Size())); i.Inc(1) {
         // Try to connect to the IP on port 80
-        conn, err := net.Dial("tcp", i.String()+":80")
+        conn, err := net.DialTCP("tcp", nil, &net.TCPAddr{IP: i})
         if err != nil {
             // The IP is not active
             continue
