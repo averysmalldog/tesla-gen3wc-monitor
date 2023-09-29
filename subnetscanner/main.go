@@ -5,7 +5,6 @@ import (
     "fmt"
     "net"
     "net/http"
-    "strings"
 )
 
 type Vital struct {
