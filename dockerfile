@@ -1,4 +1,5 @@
-FROM golang:1.15.6 AS builder
+# todo(averysmalldog): check that this new go version exists and builds correctly
+FROM golang:1.21.1 AS builder
 WORKDIR /go/src/github.com/averysmalldog/tesla-gen3wc-monitor/
 # todo(averysmalldog): eliminate this fetch step
 RUN go get -d -v github.com/averysmalldog/polly
