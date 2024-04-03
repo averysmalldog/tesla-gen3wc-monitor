@@ -3,7 +3,7 @@ package polly
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io/ioutil" // todo(averysmalldog): refactor deprecated package
 	"net/http"
 	"os"
 	"time"
@@ -42,7 +42,8 @@ func InfluxAsyncGet(writeAPI *api.WriteAPI, wcIP string) {
 			"location": "Garage",
 		},
 		data,
-		time.Now())
+		time.Now(),
+	)
 	client.WritePoint(p)
 }
 
@@ -52,7 +53,11 @@ func InfluxAsyncGet(writeAPI *api.WriteAPI, wcIP string) {
 func Execute() {
 	hpwcIP := os.Getenv("HPWC_IP")
 	influxIP := os.Getenv("INFLUX_IP")
-	client := influxdb2.NewClientWithOptions(fmt.Sprintf("http://%s:8086",influxIP), "my-token", influxdb2.DefaultOptions().SetBatchSize(20))
+	client := influxdb2.NewClientWithOptions(
+		fmt.Sprintf("http://%s:8086", influxIP),
+		"my-token",
+		influxdb2.DefaultOptions().SetBatchSize(20),
+	)
 	writeAPI := client.WriteAPI("admin", "admin123")
 
 	// The way this is set up, these likely don't get executed on ^C.
