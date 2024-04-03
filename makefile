@@ -3,7 +3,7 @@ clean:
 
 # builds for standard docker installs
 build-docker:
-	@CGO_ENABLED=0 GOOS=linux go build -o bin/docker/tesla-gen3wc-monitor .
+	@docker build .
 
 # builds for your local system
 build: 
