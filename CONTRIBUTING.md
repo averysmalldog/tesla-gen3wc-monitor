@@ -1,7 +1,7 @@
 Hey, thanks for your interest in contributing to this project! I put it together in my spare time to scratch an itch of mine and get access to some cool data. The fact that you want to help make it better is awesome.
 
 # How to contribute
-1. Fork this repository (or if you want, you can fork [polly](https://github.com/averysmalldog/polly) to improve the core functionality)
+1. Fork this repository.
 2. Do cool stuff!
 3. Submit a pull request when you're ready.
 
