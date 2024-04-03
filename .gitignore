@@ -1,3 +1,6 @@
 # Ignore binaries
 # "tesla-gen3wc-monitor" is the default binary name if you just run `go build .`
 tesla-gen3wc-monitor
+
+# Ignore standard binary directory
+bin/
