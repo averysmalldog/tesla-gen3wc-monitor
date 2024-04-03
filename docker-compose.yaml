@@ -1,14 +1,14 @@
-version: "3.7"
+version: "3.7" # todo(averysmalldog): let's see if there's a better version to pin
 services:
   grafana:
-    image: grafana/grafana
+    image: grafana/grafana # todo(averysmalldog): lock to a version
     container_name: grafana
     restart: always
     ports:
       - 3000:3000
     networks:
       - monitoring
-    volumes:
+    volumes: # todo(averysmalldog): yeah, this volume is definitely not used. Need to fix that.
       - grafana-volume:/vol01/Docker/monitoring
   influxdb:
     image: influxdb:latest
@@ -17,18 +17,17 @@ services:
       - 8086:8086
     networks:
       - monitoring
-    volumes:
+    volumes: # todo(averysmalldog): same as above, this volume is definitely not used. Need to fix that.
       - influxdb-volume:/var/lib/influxdb
     environment: 
-       # Use these same configurations parameters in your telegraf configuration, mytelegraf.conf.
       - DOCKER_INFLUXDB_INIT_MODE=setup
       - DOCKER_INFLUXDB_INIT_USERNAME=admin
       - DOCKER_INFLUXDB_INIT_PASSWORD=admin123
-      - DOCKER_INFLUXDB_INIT_ORG=admin #should be myorg, but tweaking for a test
-      - DOCKER_INFLUXDB_INIT_BUCKET=tesla #should be hpwc, but tweaking for a test
+      - DOCKER_INFLUXDB_INIT_ORG=admin
+      - DOCKER_INFLUXDB_INIT_BUCKET=tesla
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=my-token
   polly:
-    image: averysmalldog/tesla-gen3wc-monitor
+    image: averysmalldog/tesla-gen3wc-monitor # todo(averysmalldog): make it so this can be built locally (less dependent on docker hub)
     container_name: polly
     restart: always
     networks:
@@ -40,7 +39,7 @@ services:
       - influxdb
 networks:
   monitoring:
-volumes:
+volumes: # todo(averysmalldog): I think this is where some tweaks have to be made, maybe
   grafana-volume:
     external: true
   influxdb-volume:
