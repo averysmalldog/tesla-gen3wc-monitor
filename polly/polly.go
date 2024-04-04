@@ -6,6 +6,7 @@ import (
 	"io/ioutil" // todo(averysmalldog): refactor deprecated package
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/influxdata/influxdb-client-go/v2"
@@ -51,11 +52,25 @@ func InfluxAsyncGet(writeAPI *api.WriteAPI, wcIP string) {
 // recommended you run this as a goroutine so your program can do
 // other things.
 func Execute() {
-	hpwcIP := os.Getenv("HPWC_IP")
-	influxIP := os.Getenv("INFLUX_IP")
+	hpwcIP, exists := os.LookupEnv("HPWC_IP")
+	if !exists {
+		fmt.Println("env var HPWC_IP not set")
+		os.Exit(1)
+	}
+	influxIP, exists := os.LookupEnv("INFLUX_IP")
+	if !exists {
+		fmt.Println("env var INFLUX_IP not set")
+		os.Exit(1)
+	}
+
+	// Check to see if INFLUX_IP has a port specified. If not, supply the default
+	if !strings.Contains(influxIP, ":") {
+		influxIP += ":8086"
+	}
+
 	client := influxdb2.NewClientWithOptions(
-		fmt.Sprintf("http://%s:8086", influxIP),
-		"my-token",
+		fmt.Sprintf("http://%s", influxIP),
+		"my-token",                                  // todo(averysmalldog) un-hardcode this
 		influxdb2.DefaultOptions().SetBatchSize(20),
 	)
 	writeAPI := client.WriteAPI("admin", "admin123")
