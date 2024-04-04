@@ -26,9 +26,9 @@ services:
       - DOCKER_INFLUXDB_INIT_ORG=admin
       - DOCKER_INFLUXDB_INIT_BUCKET=tesla
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=my-token
-  polly:
-    image: averysmalldog/tesla-gen3wc-monitor # todo(averysmalldog): make it so this can be built locally (less dependent on docker hub)
-    container_name: polly
+  tesla-gen3wc-monitor:
+    image: averysmalldog/tesla-gen3wc-monitor
+    container_name: tesla-gen3wc-monitor
     restart: always
     networks:
       - monitoring
