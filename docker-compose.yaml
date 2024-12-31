@@ -1,4 +1,3 @@
-version: "3.7" # todo(averysmalldog): let's see if there's a better version to pin
 services:
   grafana:
     image: grafana/grafana # todo(averysmalldog): lock to a version
@@ -8,8 +7,9 @@ services:
       - 3000:3000
     networks:
       - monitoring
-    volumes: # todo(averysmalldog): yeah, this volume is definitely not used. Need to fix that.
-      - grafana-volume:/vol01/Docker/monitoring
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - grafana_config:/etc/grafana
   influxdb:
     image: influxdb:latest
     container_name: influxdb
@@ -17,8 +17,9 @@ services:
       - 8086:8086
     networks:
       - monitoring
-    volumes: # todo(averysmalldog): same as above, this volume is definitely not used. Need to fix that.
-      - influxdb-volume:/var/lib/influxdb
+    volumes:
+      - influxdb_data:/var/lib/influxdb2
+      - influxdb_config:/etc/influxdb2      
     environment: 
       - DOCKER_INFLUXDB_INIT_MODE=setup
       - DOCKER_INFLUXDB_INIT_USERNAME=admin
@@ -40,7 +41,11 @@ services:
 networks:
   monitoring:
 volumes: # todo(averysmalldog): I think this is where some tweaks have to be made, maybe
-  grafana-volume:
+  grafana_data:
     external: true
-  influxdb-volume:
+  grafana_config:
+    external: true
+  influxdb_data:
+    external: true
+  influxdb_config:
     external: true
