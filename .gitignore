@@ -4,3 +4,6 @@ tesla-gen3wc-monitor
 
 # Ignore standard binary directory
 bin/
+
+# Ignore code editor files
+.vscode
