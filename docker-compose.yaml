@@ -33,8 +33,16 @@ services:
     networks:
       - monitoring
     environment: 
-      - HPWC_IP
-      - INFLUX_IP=host.docker.internal
+      # HPWC format is:
+      #                "ip.add.re.ss"
+      #                or for multiple "name:ip.add.re.ss,name2:ip.add.re.ss,..."
+      - HPWC_IP=OldMill:192.168.1.91,Monarch:172.16.0.69
+      # Set INFLUX_IP to IP address on non-Mac systems, like 172.17.0.1
+      - INFLUX_IP=172.17.0.1   # host.docker.internal
+      # These should match "influxdb" container
+      - INFLUX_ORG=admin
+      - INFLUX_TOKEN=my-token
+      - INFLUX_BUCKET=tesla
     depends_on:
       - influxdb
 networks:
