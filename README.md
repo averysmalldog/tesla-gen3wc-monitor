@@ -24,7 +24,7 @@ A *particularly fascinating* detail I've learned about the Gen 3 HPWC is that it
 Right now, the setup process is manual and requires changing hard-coded values. It isn't pretty, but I hope to make it much simpler and automated in the future.
 
 1. Create two Docker volumes, one for each of the containers so they can persist some data: `docker volume create grafana-volume && docker volume create influxdb-volume`. I believe you only need to do this once.
-1. Supply the IP address of your Gen 3 Wall Connector as an env var: `export HPWC_IP="<your IP Address>"`. For example, `export HPWC_IP="192.168.1.15"`.
+1. Supply the IP address of your Gen 3 Wall Connector as an env var: `export HPWC_IP="<your IP Address>"`. For example, `export HPWC_IP="192.168.1.15"`. If you have more than one Gen 3 Wall Connector, use an env var like: `export HPWC_IP="Stall_1:192.168.1.32,Stall_2:192.168.1.33,Stall_3:192.168.1.34"`
 1. Run `docker-compose up` to pull and start all three containers (`influxdb`, `grafana/grafana`, and `polly`).
 1. Go to [localhost:3000](http://localhost:3000) and log in using the username `admin` and password `admin`.
 1. Navigate to **Configuration > Data Sources** and click **Add Data Source**.
